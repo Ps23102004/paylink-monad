@@ -1,0 +1,24 @@
+{
+  "name": "paylink-monad",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "One invoice link. A person pays it with a wallet; an AP agent pays the same URL over x402. USDC on Monad.",
+  "scripts": {
+    "fork": "hardhat node --fork https://rpc.monad.xyz --port 8545",
+    "test": "vitest run",
+    "serve": "tsx src/serve.ts",
+    "demo": "tsx scripts/demo.ts",
+    "probe": "tsx scripts/facilitator-probe.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "esbuild": "^0.28.2",
+    "hardhat": "^2.29.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "viem": "^2.57.4",
+    "vitest": "^5.0.3"
+  }
+}
