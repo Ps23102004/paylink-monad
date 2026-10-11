@@ -3,7 +3,7 @@ import { createPublicClient, createWalletClient, defineChain, http } from "viem"
 import { privateKeyToAccount } from "viem/accounts";
 import { isLocalSimNode, needsSeed, seedUsdc } from "./sim";
 
-// Hardhat's well-known account #0 (public test key, worthless outside a local node). Used as the sim relayer.
+// Hardhat's well-known account #0: a PUBLIC test key printed by every Hardhat install (not a secret; worthless outside a local node). Used as the sim relayer.
 export const SIM_RELAYER_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" as const;
 export const simChain = defineChain({ id: 143, name: "Monad (local simulation)", nativeCurrency: { name: "MON", symbol: "MON", decimals: 18 }, rpcUrls: { default: { http: ["http://127.0.0.1:8545"] } } });
 

@@ -10,9 +10,10 @@ import { SIM_RELAYER_KEY, simClients, startSimNode } from "./simnode";
 const mode = (process.env.PAYLINK_MODE ?? "sim") as Mode;
 const port = Number(process.env.PORT ?? 8787);
 const store = new InvoiceStore();
+process.on("unhandledRejection", (e: any) => { console.error("\nPaylink could not start:", e?.message ?? e, "\nTip: free the port (lsof -i :" + port + ") or set PORT / SIM_PORT, and make sure `npm install` finished."); process.exit(1); });
 
 if (mode === "sim") {
-  const node = await startSimNode(Number(process.env.SIM_PORT ?? 8545));
+  const node = await startSimNode(Number(process.env.SIM_PORT ?? 18545));
   const { client, relayer } = simClients(node.url);
   const net = NETS[143];
   createApp({ store, net, client, mode, facilitator: new LocalFacilitator(client, relayer, net), simFund: (a) => fundUsdc(node.url, a, 25_000_000n) })
