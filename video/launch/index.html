@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>Paylink: launch (20s)</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<link rel="stylesheet" href="assets/paylink.css" />
+<style>
+  .url { position: absolute; left: 200px; font-family: var(--mono); font-size: 90px; line-height: 1; white-space: nowrap; width: max-content; }
+  #u-paper { color: var(--ink); top: 564px; }
+  #u-dark { color: var(--term-fg); top: 564px; }
+  .gh { position: absolute; left: 200px; font-family: var(--mono); font-size: 80px; line-height: 1; white-space: nowrap; width: max-content; top: 571px; }
+  #g-paper { color: var(--ink); } #g-dark { color: var(--term-fg); }
+  .hid { visibility: hidden; opacity: 0; }
+  .term { position: absolute; font-family: var(--mono); font-size: 24px; line-height: 36px; color: var(--term-fg); overflow: hidden; }
+  .term .line { overflow: hidden; }
+  #btncut { position: absolute; left: 1101px; top: 430px; width: 723px; height: 150px; border: 3px solid var(--ink); box-shadow: 12px 12px 0 var(--ink);
+    background: url("assets/ui/1-unpaid.png") no-repeat; background-size: 1680px 1320px; background-position: -108px -732px; }
+  #win { left: 1180px; top: 64px; width: 644px; }
+  #win .shot { width: 638px; height: 501px; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1920" data-height="1080">
+
+  <!-- ===================== PAPER WORLD (a person) ===================== -->
+  <div id="paper" class="world">
+    <div class="rules" id="rules"></div>
+    <div class="margin"></div>
+    <div class="grain"></div>
+    <div class="perf pf hid"></div>
+
+    <section id="s1p" class="clip" data-start="0" data-duration="3.4" data-track-index="1">
+      <div id="h-head" class="abs serif ink split" style="left:200px;top:128px;font-size:124px;width:1500px">
+        <span class="row">Every invoice assumes</span>
+        <span class="row it">a person with a wallet.</span>
+      </div>
+      <div id="btncut"></div>
+    </section>
+
+    <section id="s2p" class="clip" data-start="3.0" data-duration="7.3" data-track-index="1">
+      <div id="cap-link" class="abs serif ink split" style="left:200px;top:318px;font-size:128px;width:1600px"><span class="row">One invoice link.</span></div>
+      <div id="cap-top" class="abs serif ink split" style="left:200px;top:150px;font-size:78px;width:960px">
+        <span class="row">A person opens it</span>
+        <span class="row it">and pays with a wallet.</span>
+      </div>
+      <div id="cap-top-sub" class="abs serif soft it split" style="left:200px;top:352px;font-size:40px;width:900px"><span class="row">One signature. No gas.</span></div>
+      <div id="win" class="win">
+        <div class="bar"><b></b><b></b><b></b><span class="addr">localhost:8787/i/b5afe815e575</span></div>
+        <div class="shot">
+          <img id="ui1" src="assets/ui/1-unpaid.png" alt="pay page, unpaid" />
+          <img id="ui3" class="hid" src="assets/ui/3-signing.png" alt="pay page, signing" />
+          <img id="ui4" class="hid" src="assets/ui/4-paid.png" alt="pay page, paid" />
+        </div>
+      </div>
+      <svg id="ptr" class="pointer hid" viewBox="0 0 44 56" style="left:1361px;top:422px"><path d="M3 3 L3 44 L13 34 L20 52 L28 48 L21 31 L36 31 Z" fill="#1b1813" stroke="#ece6d6" stroke-width="3" stroke-linejoin="round"/></svg>
+      <div id="rip" class="ripple hid" style="left:1316px;top:377px"></div>
+      <div id="stamp1" class="stamp hid" style="left:684px;top:336px;font-size:172px">Paid<small>verified from chain logs</small></div>
+      <div id="u-paper" class="url" data-layout-allow-overlap data-layout-allow-occlusion>localhost:8787/i/b5afe815e575</div>
+      <div id="acc-top" class="abs mono ink hid" style="left:200px;top:478px;font-size:40px;letter-spacing:.01em"><span class="soft">Accept: text/html</span>  →  a pay page</div>
+    </section>
+
+    <section id="sBp" class="clip" data-start="11.8" data-duration="2.4" data-track-index="1">
+      <div id="labB" class="abs mono soft" style="left:200px;top:118px;font-size:24px">$ curl -s http://localhost:8787/i/b5afe815e575/receipt | python3 -m json.tool</div>
+      <div id="rcpt" class="abs mono ink" style="left:200px;top:178px;font-size:30px;line-height:46px">
+        <span class="line">{</span>
+        <span class="line">    "id": "b5afe815e575",</span>
+        <span class="line">    "status": "paid",</span>
+        <span class="line" id="vfl">    "verifiedFromLogs": <span class="hl-ink">true</span>,</span>
+        <span class="line">    "payer": "0x7F152736F5D39C4942633BEdB112935176f85a30",</span>
+        <span class="line">    "block": "23",</span>
+        <span class="line">    "tx": "0x3344211e4135cc4a2f8cc3c94d0ea2fadf6703008dd5c60613b6888e007fd46d"</span>
+        <span class="line">}</span>
+      </div>
+      <div id="scan" class="abs hid" style="left:180px;top:178px;width:1520px;height:46px;border-top:3px solid var(--rule);border-bottom:3px solid var(--rule);background:rgba(47,107,79,.10)"></div>
+      <div id="stmtB" class="abs serif ink split" style="left:200px;top:628px;font-size:104px;width:1150px">
+        <span class="row">Marked paid only after</span>
+        <span class="row it">the chain logs agree.</span>
+      </div>
+      <div id="stamp2" class="stamp hid" style="left:1340px;top:612px;font-size:190px">Paid<small>re-read from tx logs</small></div>
+    </section>
+
+    <section id="s4p" class="clip" data-start="15.9" data-duration="4.1" data-track-index="1">
+      <div id="cta-top" class="abs serif ink split" style="left:200px;top:150px;font-size:132px;width:1600px">
+        <span class="row">One invoice link.</span>
+        <span class="row it">Two kinds of payer.</span>
+      </div>
+      <div id="g-paper" class="gh" data-layout-allow-overlap data-layout-allow-occlusion>github.com/Ps23102004/paylink-monad</div>
+    </section>
+  </div>
+
+  <!-- ===================== DARK WORLD (software) ===================== -->
+  <div id="dark" class="world">
+    <div class="feed l" id="feedl"></div><div class="feed r" id="feedr"></div>
+    <div class="perf pf hid"></div>
+
+    <section id="s1d" class="clip" data-start="0" data-duration="3.4" data-track-index="2">
+      <div id="h-mono" class="abs mono pfg" style="left:200px;top:786px;font-size:64px;white-space:nowrap;width:max-content">Software can’t click “Pay”.</div>
+      <span id="h-cur" class="cursor abs" style="left:1198px;top:796px;width:38px;height:66px"></span>
+    </section>
+
+    <section id="s2d" class="clip" data-start="3.0" data-duration="7.3" data-track-index="2">
+      <div id="u-dark" class="url" data-layout-allow-overlap data-layout-allow-occlusion>localhost:8787/i/b5afe815e575</div>
+      <div id="acc-bot" class="abs mono pfg hid" style="left:200px;top:690px;font-size:40px;letter-spacing:.01em"><span class="dim">anything else</span>  →  <span class="hl">HTTP 402</span></div>
+      <div id="cap-bot" class="abs serif pfg split" style="left:200px;top:668px;font-size:62px;width:960px"><span class="row">Software asks the same URL.</span></div>
+      <div id="big402" class="abs hl hid" style="left:196px;top:752px;font-family:var(--stampface);font-size:236px;line-height:1">402</div>
+      <div id="lbl402" class="abs hid" style="left:610px;top:792px;width:520px">
+        <div class="lab pfg">Payment Required</div>
+        <div class="serif it pfg" style="font-size:36px;margin-top:14px;line-height:1.2">x402 v2 terms: amount, payee, and a nonce bound to this invoice.</div>
+      </div>
+      <div id="term1" class="term" style="left:1180px;top:654px;width:664px;height:330px">
+        <span class="line hid" id="t1l1"><span class="dim">$ </span><span id="t1cmd">curl -si http://localhost:8787/i/b5afe815e575</span></span>
+        <span class="line hl hid" id="t1l2">HTTP/1.1 402 Payment Required</span>
+        <span class="line dim hid" id="t1l3">content-type: application/json</span>
+        <span class="line dim hid" id="t1l4">cache-control: no-store</span>
+        <span class="line dim hid" id="t1l5">payment-required: eyJ4NDAyVmVyc2lvbiI6MiwiZXJyb3IiOiJwYXltZW50IHJlcXVpcmVkIiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cDovL2xvY2FsaG9zdDo4Nzg3L2kvYjVhZmU4MTVlNTc1</span>
+        <span class="line hid" id="t1l6"> </span>
+        <span class="line hid" id="t1l7">{"x402Version":2,"error":"payment required","resource":{"url":"http://localhost:8787/i/b5afe815e575"</span>
+      </div>
+      <div id="cap-bot2" class="abs serif pfg split hid" style="left:200px;top:664px;font-size:58px;width:1660px">
+        <span class="row">An AP agent pays only what <i>a purchase order covers.</i></span>
+      </div>
+      <div id="term2" class="term hid" style="left:200px;top:772px;width:1650px;height:212px;font-size:29px;line-height:42px">
+        <span class="line"><span class="dim">$ </span><span id="t2cmd">npm run demo</span><span class="dim t2c">   # excerpt: docs/SIM-RUN.md, section 2</span></span>
+        <span class="line dim t2r">## 2. AP agent works through three more invoice URLs (PO covers b ≤ $5 and d ≤ $10)</span>
+        <span class="line t2r">PAID      9d6b8a6c2302  0xda01f9b59d92f7d87fbbd1a29bcdd58b1b6670f4e79c94e687a6a28eb9e72455</span>
+        <span class="line t2r">REJECTED  eb9896da2fd8 <span class="hl">no_purchase_order</span></span>
+        <span class="line t2r">REJECTED  379df162fb88 <span class="hl">exceeds_purchase_order</span></span>
+      </div>
+    </section>
+
+    <section id="sAd" class="clip" data-start="9.8" data-duration="2.4" data-track-index="2">
+      <div id="labA" class="abs lab dim" style="left:200px;top:170px">HTTP 402 body · accepts[0].extra</div>
+      <div id="idA" class="abs mono pfg" style="left:200px;top:220px;font-size:96px;white-space:nowrap;width:max-content">"invoiceId": "<span class="hl">b5afe815e575</span>"</div>
+      <div id="nonceA" class="abs mono pfg" style="left:200px;top:392px;font-size:32px;white-space:nowrap;width:max-content">"nonce": "<span class="hl">0xc97196ced1584eccb14fd67d701f013405041e774499148ffddf574b8e5066a8</span>"</div>
+      <svg id="brk" class="abs" style="left:112px;top:270px" width="90" height="160" viewBox="0 0 90 160">
+        <path id="brkp" d="M80 12 H30 V140 H72" fill="none" stroke="#f0644a" stroke-width="5" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="brka" d="M62 128 L76 140 L62 152" fill="none" stroke="#f0644a" stroke-width="5" class="hid"/>
+      </svg>
+      <div id="kecA" class="abs mono hl hid" style="left:200px;top:340px;font-size:26px;letter-spacing:.04em">keccak256(invoiceId) =</div>
+      <div id="annA" class="abs serif pfg split" style="left:200px;top:540px;font-size:112px;width:1600px"><span class="row">The nonce <i>is</i> the invoice.</span></div>
+      <div id="subA" class="abs serif dim split" style="left:200px;top:690px;font-size:50px;width:1600px;line-height:1.2"><span class="row">A signature for this invoice can’t pay any other.</span></div>
+    </section>
+
+    <section id="sCd" class="clip" data-start="13.8" data-duration="2.5" data-track-index="2">
+      <div id="labC" class="abs mono dim" style="left:200px;top:118px;font-size:26px">$ npm test</div>
+      <div id="headC" class="abs serif pfg split" style="left:200px;top:160px;font-size:92px;width:1600px"><span class="row">None of these get paid:</span></div>
+      <div id="listC" class="abs mono pfg" style="left:200px;top:300px;font-size:34px;line-height:58px">
+        <span class="line tc"><span class="ck"></span>wrong amount</span>
+        <span class="line tc"><span class="ck"></span>wrong recipient</span>
+        <span class="line tc"><span class="ck"></span>a tampered signature (someone else's `from`)</span>
+        <span class="line tc"><span class="ck"></span>lets the same paid URL answer 200 afterwards and refuses a second payment</span>
+        <span class="line tc"><span class="ck"></span>lets exactly one of two simultaneous payers win</span>
+        <span class="line tc"><span class="ck"></span>a payment for invoice A cannot be passed off as payment for invoice B</span>
+      </div>
+      <div id="footC" class="abs mono hid" style="left:200px;top:686px;font-size:112px;white-space:pre"><span class="dim">Tests  </span><span class="okc">26 passed</span><span class="dim"> (26)</span></div>
+    </section>
+
+    <section id="s4d" class="clip" data-start="15.9" data-duration="4.1" data-track-index="2">
+      <div id="g-dark" class="gh" data-layout-allow-overlap data-layout-allow-occlusion>github.com/Ps23102004/paylink-monad</div>
+      <div id="ctaBot" class="abs" style="left:200px;top:720px;width:1500px">
+        <div class="mono pfg" id="ctaCmd" style="font-size:32px"><span class="dim">$ </span>npm install &amp;&amp; npm test &amp;&amp; npm run serve</div>
+        <div class="serif it dim" id="ctaNote" style="font-size:40px;margin-top:26px">Built for Metropolis (Monad). Runs in simulation; not yet live on Monad.</div>
+      </div>
+    </section>
+  </div>
+
+  <div id="simtag"><b>Simulation</b> · local chain · test money</div>
+
+  <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="20" data-track-index="9"></audio>
+</div>
+
+<script>
+  // split each .row into per-word masks (setup only; the timeline below drives everything). Keeps <i> as .it per word.
+  const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  document.querySelectorAll(".split .row").forEach((row) => {
+    const out = [];
+    row.childNodes.forEach((n) => {
+      const cls = n.nodeType === 1 ? (n.tagName === "I" ? "it" : n.className) : "";
+      n.textContent.split(/(\s+)/).forEach((w) => {
+        if (!w) return;
+        out.push(/^\s+$/.test(w) ? " " : `<span class="mask" style="display:inline-block"><span class="${cls}">${esc(w)}</span></span>`);
+      });
+    });
+    row.innerHTML = out.join("").trim();
+    row.style.display = "block";
+  });
+  const W = (sel) => gsap.utils.toArray(`${sel} .mask > span`);
+  const tl = gsap.timeline({ paused: true });
+  const root = document.getElementById("root");
+  const paperIn = (sel, t, st = 0.06) => tl.fromTo(W(sel), { yPercent: 115 }, { yPercent: 0, duration: 0.55, ease: "power3.out", stagger: st }, t);
+  const paperOut = (sel, t) => tl.to(W(sel), { yPercent: -115, duration: 0.3, ease: "power2.in", stagger: 0.02 }, t);
+  const typeOn = (sel, t, dur, n) => tl.fromTo(sel, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: dur, ease: `steps(${n})` }, t);
+  const show = (sel, t) => tl.set(sel, { autoAlpha: 1 }, t);
+  const hide = (sel, t) => tl.set(sel, { autoAlpha: 0 }, t);
+  const stampIn = (sel, t, rot) => tl.fromTo(sel, { autoAlpha: 0, scale: 1.75, rotation: rot - 9 }, { autoAlpha: 1, scale: 1, rotation: rot, duration: 0.11, ease: "power4.in" }, t)
+    .to(sel, { x: 3, y: 2, duration: 0.05, ease: "power1.out", yoyo: true, repeat: 1 }, t + 0.11);
+  const seam = (to, t, dur, ease) => tl.to(root, { "--seam": `${to}px`, duration: dur, ease }, t);
+
+  // ambient: ledger rules drift one period, tractor-feed holes crawl
+  tl.fromTo("#rules", { y: 0 }, { y: 64, duration: 20, ease: "none" }, 0);
+  tl.fromTo(".feed", { y: 0 }, { y: -80, duration: 20, ease: "none" }, 0);
+
+  // ---------- 0–3 s HOOK ----------
+  paperIn("#h-head", 0.1, 0.07);
+  tl.fromTo("#btncut", { x: 900 }, { x: 0, duration: 0.6, ease: "back.out(1.1)" }, 0.75);
+  seam(620, 1.5, 0.24, "steps(4)");
+  show(".pf", 1.5);
+  typeOn("#h-mono", 1.82, 0.88, 26);
+  tl.fromTo("#h-cur", { x: -998.4 }, { x: 0, duration: 0.88, ease: "steps(26)" }, 1.82);
+  tl.fromTo("#h-cur", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.12, ease: "steps(1)", repeat: 1, yoyo: true, immediateRender: false }, 2.74);
+  // exit
+  paperOut("#h-head", 3.0);
+  tl.to("#btncut", { x: 900, duration: 0.32, ease: "power3.in" }, 3.0);
+  tl.to("#h-mono", { clipPath: "inset(0% 100% 0% 0%)", duration: 0.3, ease: "steps(10)" }, 3.0);
+  tl.to("#h-cur", { x: -998.4, duration: 0.3, ease: "steps(10)" }, 3.0);
+  hide("#h-cur", 3.32);
+
+  // ---------- 3–10 s ONE URL, TWO PAYERS ----------
+  typeOn(".url", 3.32, 0.78, 29);
+  paperIn("#cap-link", 3.4);
+  show("#acc-top", 3.95); show("#acc-bot", 3.95); /*keep*/
+  tl.fromTo(["#acc-top", "#acc-bot"], { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.3, ease: "steps(14)", immediateRender: false }, 3.95);
+  paperOut("#cap-link", 4.72);
+  hide("#acc-bot", 4.78);
+  tl.fromTo(".url", { scale: 1, transformOrigin: "0px 56px" }, { scale: 0.6, duration: 0.45, ease: "power3.inOut" }, 4.75);
+  tl.fromTo("#win", { y: 580 }, { y: 0, duration: 0.55, ease: "power3.out" }, 5.05);
+  paperIn("#cap-top", 4.95);
+  paperIn("#cap-bot", 5.1);
+  show("#t1l1", 5.22);
+  typeOn("#t1cmd", 5.22, 0.5, 24);
+  ["#t1l2", "#t1l3", "#t1l4", "#t1l5", "#t1l6", "#t1l7"].forEach((s, i) => show(s, 5.76 + i * 0.06));
+  tl.fromTo("#big402", { autoAlpha: 0, scale: 1.4 }, { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power4.in" }, 5.8);
+  show("#lbl402", 5.95);
+  // click "Pay with demo burner wallet" on the real page
+  show("#ptr", 5.5);
+  tl.fromTo("#ptr", { x: 260, y: 170 }, { x: 0, y: 0, duration: 0.42, ease: "power2.inOut", immediateRender: false }, 5.5);
+  tl.to("#ptr", { scale: 0.86, duration: 0.06, yoyo: true, repeat: 1, ease: "power1.inOut" }, 5.95);
+  tl.fromTo("#rip", { autoAlpha: 1, scale: 0.3 }, { scale: 1.3, autoAlpha: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, 5.98);
+  paperIn("#cap-top-sub", 6.1);
+  show("#ui3", 6.02);
+  hide("#ptr", 6.7);
+  show("#ui4", 6.8);
+  stampIn("#stamp1", 6.92, -7);
+  hide("#acc-top", 6.92);
+  // agent phase on the software side: screen clears, transcript prints
+  hide("#cap-bot", 7.5); hide("#big402", 7.5); hide("#lbl402", 7.5); hide("#term1", 7.5);
+  show("#cap-bot2", 7.55); paperIn("#cap-bot2", 7.55);
+  show("#term2", 7.8); typeOn("#t2cmd", 7.8, 0.3, 12);
+  tl.fromTo(".t2c", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01 }, 8.12);
+  tl.fromTo(".t2r", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01, stagger: 0.22 }, 8.25);
+  // shutter: software world takes the frame
+  seam(0, 9.82, 0.2, "steps(4)");
+
+  // ---------- 10–12 s THE NONCE IS THE INVOICE ----------
+  hide(".pf", 10.02);
+  show("#labA", 10.0);
+  typeOn("#idA", 10.0, 0.32, 27);
+  show("#kecA", 10.36);
+  typeOn("#nonceA", 10.36, 0.36, 77);
+  tl.to("#brkp", { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 10.4);
+  show("#brka", 10.7);
+  paperIn("#annA", 10.62);
+  paperIn("#subA", 10.95, 0.03);
+
+  // ---------- 12–14 s PAID ONLY AFTER THE LOGS ----------
+  show(".pf", 11.84);
+  seam(1080, 11.84, 0.32, "power3.inOut");
+  hide(".pf", 12.16);
+  tl.fromTo("#labB", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01 }, 12.1);
+  tl.fromTo("#rcpt .line", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01, stagger: 0.04 }, 12.12);
+  show("#scan", 12.3);
+  tl.fromTo("#scan", { y: 0 }, { y: 322, duration: 0.6, ease: "power1.inOut", immediateRender: false }, 12.3);
+  tl.to("#scan", { y: 138, duration: 0.18, ease: "power2.out" }, 12.9);
+  paperIn("#stmtB", 12.45);
+  stampIn("#stamp2", 13.1, 6);
+
+  // ---------- 14–16 s WHAT MUST NOT GET PAID ----------
+  show(".pf", 13.84);
+  seam(0, 13.84, 0.2, "steps(4)");
+  hide(".pf", 14.04);
+  tl.fromTo("#labC", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01 }, 14.02);
+  paperIn("#headC", 14.04);
+  tl.fromTo(".tc", { autoAlpha: 0, x: -24 }, { autoAlpha: 1, x: 0, duration: 0.08, ease: "steps(2)", stagger: 0.13 }, 14.3);
+  tl.fromTo("#footC", { autoAlpha: 0, scale: 1.25, transformOrigin: "0% 50%" }, { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power4.in" }, 15.15);
+
+  // ---------- 16–20 s CTA ----------
+  show(".pf", 15.92);
+  seam(620, 15.92, 0.45, "power3.inOut");
+  paperIn("#cta-top", 16.2, 0.08);
+  typeOn(".gh", 16.5, 0.75, 35);
+  tl.fromTo("#ctaCmd", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01 }, 17.35);
+  tl.fromTo("#ctaNote", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 17.6);
+
+  window.__timelines["main"] = tl;
+</script>
+</body>
+</html>

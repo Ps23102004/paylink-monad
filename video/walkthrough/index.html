@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>Paylink: walkthrough</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<link rel="stylesheet" href="assets/paylink.css" />
+<style>
+  .url { position: absolute; left: 200px; top: 564px; font-family: var(--mono); font-size: 90px; line-height: 1; white-space: nowrap; width: max-content; }
+  .gh { position: absolute; left: 200px; top: 710px; font-family: var(--mono); font-size: 80px; line-height: 1; white-space: nowrap; width: max-content; }
+  .hid { visibility: hidden; opacity: 0; }
+  .term { position: absolute; font-family: var(--mono); font-size: 24px; line-height: 36px; color: var(--term-fg); overflow: hidden; }
+  .term .line { overflow: hidden; }
+  .wrapl { white-space: pre-wrap !important; word-break: break-all; }
+  #winA { left: 1180px; top: 64px; width: 644px; } #winA .shot { width: 638px; height: 501px; }
+  #winB { left: 870px; top: 140px; width: 954px; } #winB .shot { width: 948px; height: 745px; }
+  .step { position: absolute; left: 200px; width: 580px; font-size: 44px; line-height: 1.12; }
+  .step .n { font-family: var(--mono); font-size: 24px; letter-spacing: .1em; color: var(--stamp); display: block; margin-bottom: 8px; }
+  .todo { position: relative; padding-left: 78px; }
+  .todo::before { content: ""; position: absolute; left: 0; top: .16em; width: 40px; height: 40px; border: 5px solid var(--stamp); border-radius: 4px; }
+  .note { position: absolute; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 34px; color: var(--stamp-hi); white-space: nowrap; }
+  .col { position: absolute; font-family: var(--mono); font-size: 26px; line-height: 38px; color: var(--term-fg); width: 800px; }
+  .col .it2 { display: block; padding-left: 1.6em; text-indent: -1.6em; }
+  .col .grp { display: block; color: var(--stamp-hi); font-size: 21px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="88" data-width="1920" data-height="1080">
+
+  <!-- ===================== PAPER WORLD ===================== -->
+  <div id="paper" class="world">
+    <div class="rules" id="rules"></div>
+    <div class="margin"></div>
+    <div class="grain"></div>
+    <div class="perf pf hid"></div>
+
+    <!-- W1 title -->
+    <section id="w1p" class="clip" data-start="0" data-duration="9.6" data-track-index="1">
+      <div id="w1lab" class="abs lab hid soft" style="left:200px;top:104px">Metropolis (Monad) · Track 2 · Walkthrough</div>
+      <div id="w1title" class="abs serif ink split" style="left:192px;top:140px;font-size:176px;width:1600px"><span class="row">Paylink</span></div>
+      <div id="w1sub" class="abs serif ink split" style="left:200px;top:352px;font-size:62px;width:1500px;line-height:1.12">
+        <span class="row it">One invoice link that a person</span>
+        <span class="row it">and an AP agent can both pay.</span>
+      </div>
+      <div id="u1p" class="url ink" data-layout-allow-overlap data-layout-allow-occlusion>localhost:8787/i/b5afe815e575</div>
+    </section>
+
+    <!-- W2a same URL -->
+    <section id="w2p" class="clip" data-start="8.8" data-duration="6.6" data-track-index="1">
+      <div id="w2lab" class="abs lab hid soft" style="left:200px;top:96px">01 · One URL</div>
+      <div id="w2cap" class="abs serif ink split" style="left:200px;top:150px;font-size:80px;width:960px">
+        <span class="row">A browser gets</span>
+        <span class="row it">a pay page.</span>
+      </div>
+      <div id="w2acc" class="abs mono ink hid" style="left:200px;top:470px;font-size:38px"><span class="soft">Accept: text/html</span>  →  pay page</div>
+      <div id="winA" class="win">
+        <div class="bar"><b></b><b></b><b></b><span class="addr">localhost:8787/i/b5afe815e575</span></div>
+        <div class="shot"><img src="assets/ui/1-unpaid.png" alt="real pay page, unpaid" /></div>
+      </div>
+    </section>
+
+    <!-- W3 a person pays -->
+    <section id="w3p" class="clip" data-start="21.6" data-duration="19.35" data-track-index="1">
+      <div id="w3lab" class="abs lab hid soft" style="left:200px;top:96px">02 · A person pays</div>
+      <div id="st1" class="step serif ink" style="top:170px"><span class="n">STEP 1</span>Open the link.</div>
+      <div id="st2" class="step serif ink" style="top:295px"><span class="n">STEP 2 · SIM ONLY</span>Fund a throwaway burner wallet with test USDC.</div>
+      <div id="st3" class="step serif ink" style="top:469px"><span class="n">STEP 3</span>Sign one authorization. No gas, no transaction of your own.</div>
+      <div id="st4" class="step serif ink" style="top:692px"><span class="n">STEP 4</span>Settled, then checked against the chain logs.</div>
+      <div id="winBwrap" class="abs" style="left:0;top:0;width:1920px;height:1080px">
+        <div id="winB" class="win">
+          <div class="bar"><b></b><b></b><b></b><span class="addr">localhost:8787/i/b5afe815e575</span></div>
+          <div class="shot">
+            <img id="b1" src="assets/ui/1-unpaid.png" alt="real pay page, unpaid" />
+            <img id="b2" class="hid" src="assets/ui/2-funded.png" alt="real pay page, burner funded" />
+            <img id="b3" class="hid" src="assets/ui/3-signing.png" alt="real pay page, signing" />
+            <img id="b4" class="hid" src="assets/ui/4-paid.png" alt="real pay page, paid" />
+          </div>
+        </div>
+      </div>
+      <svg id="ptrB" class="pointer hid" viewBox="0 0 44 56" style="left:1115px;top:729px"><path d="M3 3 L3 44 L13 34 L20 52 L28 48 L21 31 L36 31 Z" fill="#1b1813" stroke="#ece6d6" stroke-width="3" stroke-linejoin="round"/></svg>
+      <div id="ripB" class="ripple hid" style="left:1073px;top:687px"></div>
+      <div id="stampW3" class="stamp hid" style="left:214px;top:850px;font-size:118px">Paid<small>verified from chain logs</small></div>
+    </section>
+
+    <!-- W4 proof (top half) -->
+    <section id="w4p" class="clip" data-start="40.8" data-duration="9.6" data-track-index="1">
+      <div id="w4lab" class="abs lab hid soft" style="left:200px;top:78px">03 · Proof</div>
+      <div id="w4cmd" class="abs mono soft" style="left:200px;top:118px;font-size:22px">$ curl -s http://localhost:8787/i/b5afe815e575/receipt | python3 -m json.tool</div>
+      <div id="rcpt" class="abs mono ink" style="left:200px;top:156px;font-size:26px;line-height:36px">
+        <span class="line">{</span>
+        <span class="line">    "id": "b5afe815e575",</span>
+        <span class="line">    "status": "paid",</span>
+        <span class="line">    "verifiedFromLogs": <span class="hl-ink">true</span>,</span>
+        <span class="line">    "payer": "0x7F152736F5D39C4942633BEdB112935176f85a30",</span>
+        <span class="line">    "block": "23",</span>
+        <span class="line">    "tx": "0x3344211e4135cc4a2f8cc3c94d0ea2fadf6703008dd5c60613b6888e007fd46d"</span>
+        <span class="line">}</span>
+      </div>
+      <div id="scan" class="abs hid" style="left:180px;top:156px;width:1420px;height:36px;border-top:3px solid var(--rule);border-bottom:3px solid var(--rule);background:rgba(47,107,79,.10)"></div>
+      <div id="stampW4" class="stamp hid" style="left:1430px;top:150px;font-size:146px">Paid<small>re-read from tx logs</small></div>
+      <div id="w4stmt" class="abs serif ink split" style="left:200px;top:454px;font-size:62px;width:1600px"><span class="row">Paid only after <i>the chain logs agree.</i></span></div>
+      <div id="w4mech" class="abs serif soft it split" style="left:200px;top:534px;font-size:33px;width:1600px"><span class="row">One AuthorizationUsed(nonce) and a matching Transfer in the settlement transaction, or it isn’t paid.</span></div>
+    </section>
+
+    <!-- W7 probe caption (top strip) -->
+    <section id="w7p" class="clip" data-start="71.6" data-duration="9.7" data-track-index="1">
+      <div id="w7lab" class="abs lab hid soft" style="left:200px;top:70px">05 · Read-only, against the real network</div>
+      <div id="w7cap" class="abs serif ink split" style="left:200px;top:112px;font-size:48px;width:1560px;line-height:1.16">
+        <span class="row">Our EIP-712 domain matches live Monad mainnet and testnet USDC.</span>
+        <span class="row it">Monad’s facilitator parsed our payload; it only said the empty test wallet had no funds.</span>
+      </div>
+    </section>
+
+    <!-- W8 not done yet + CTA -->
+    <section id="w8p" class="clip" data-start="80.8" data-duration="7.2" data-track-index="1">
+      <div id="w8lab" class="abs lab hid soft" style="left:200px;top:96px">06 · Honest status</div>
+      <div id="w8title" class="abs serif ink split" style="left:200px;top:140px;font-size:112px;width:1600px"><span class="row">What’s <i>not</i> done yet.</span></div>
+      <div id="w8list" class="abs serif ink" style="left:200px;top:310px;font-size:52px;line-height:1.5;width:1600px">
+        <div class="todo td">Not run live on Monad yet.</div>
+        <div class="todo td">No users. No sponsor.</div>
+        <div class="todo td">No off-ramp integration.</div>
+        <div class="todo td">Browser-wallet path untested with a real wallet. No Privy.</div>
+      </div>
+      <div id="g8p" class="gh ink" data-layout-allow-overlap data-layout-allow-occlusion>github.com/Ps23102004/paylink-monad</div>
+    </section>
+  </div>
+
+  <!-- ===================== DARK WORLD ===================== -->
+  <div id="dark" class="world">
+    <div class="feed l"></div><div class="feed r"></div>
+    <div class="perf pf hid"></div>
+
+    <!-- W1 disclosure -->
+    <section id="w1d" class="clip" data-start="0" data-duration="9.6" data-track-index="2">
+      <div id="u1d" class="url pfg" data-layout-allow-overlap data-layout-allow-occlusion>localhost:8787/i/b5afe815e575</div>
+      <div id="w1disc" class="abs serif pfg split" style="left:200px;top:700px;font-size:46px;width:1560px;line-height:1.22">
+        <span class="row">Everything here ran in <i>simulation:</i> a local chain seeded with</span>
+        <span class="row">Monad mainnet’s real USDC bytecode, using test money.</span>
+      </div>
+      <div id="w1mono" class="abs mono dim hid" style="left:200px;top:864px;font-size:26px">not yet run live on Monad · what is real vs simulated: docs/SIMULATION.md</div>
+    </section>
+
+    <!-- W2a software side -->
+    <section id="w2d" class="clip" data-start="8.8" data-duration="6.6" data-track-index="2">
+      <div id="w2capd" class="abs serif pfg split" style="left:200px;top:668px;font-size:64px;width:960px"><span class="row">Software gets <i>HTTP 402.</i></span></div>
+      <div id="w2accd" class="abs mono pfg hid" style="left:200px;top:780px;font-size:38px"><span class="dim">anything else</span>  →  <span class="hl">HTTP 402</span></div>
+      <div id="w2t" class="term" style="left:1180px;top:654px;width:664px;height:330px">
+        <span class="line hid" id="w2t0"><span class="dim">$ </span><span id="w2cmd">curl -si http://localhost:8787/i/b5afe815e575</span></span>
+        <span class="line hl hid w2r">HTTP/1.1 402 Payment Required</span>
+        <span class="line dim hid w2r">content-type: application/json</span>
+        <span class="line dim hid w2r">cache-control: no-store</span>
+        <span class="line dim hid w2r">payment-required: eyJ4NDAyVmVyc2lvbiI6MiwiZXJyb3IiOiJwYXltZW50IHJlcXVpcmVkIiwicmVzb3VyY2UiOnsidXJsIjoi</span>
+        <span class="line dim hid w2r">Date: Sun, 11 Oct 2026 20:26:45 GMT</span>
+        <span class="line dim hid w2r">Connection: keep-alive</span>
+        <span class="line dim hid w2r">Keep-Alive: timeout=5</span>
+        <span class="line dim hid w2r">Transfer-Encoding: chunked</span>
+      </div>
+    </section>
+
+    <!-- W2b inside the 402 -->
+    <section id="w2bd" class="clip" data-start="14.8" data-duration="7.4" data-track-index="2">
+      <div id="w2blab" class="abs lab hid dim" style="left:200px;top:96px">01 · One URL · the 402 body</div>
+      <div id="w2bt" class="term" style="left:200px;top:140px;width:1650px;height:620px;font-size:26px;line-height:38px">
+        <span class="line hid" id="w2b0"><span class="dim">$ </span><span id="w2bcmd">curl -s http://localhost:8787/i/b5afe815e575 | python3 -m json.tool</span></span>
+        <span class="line dim jr">…</span>
+        <span class="line jr">    "accepts": [</span>
+        <span class="line jr">        {</span>
+        <span class="line jr">            "scheme": "exact",</span>
+        <span class="line jr">            "network": "eip155:143",</span>
+        <span class="line jr">            "amount": "<span class="hl">4000000</span>",</span>
+        <span class="line jr">            "asset": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",</span>
+        <span class="line jr">            "payTo": "<span class="hl">0x1111111111111111111111111111111111111111</span>",</span>
+        <span class="line jr">            "maxTimeoutSeconds": 300,</span>
+        <span class="line jr">            "extra": {</span>
+        <span class="line jr">                "name": "USDC",</span>
+        <span class="line jr">                "version": "2",</span>
+        <span class="line jr">                "nonce": "<span class="hl">0xc97196ced1584eccb14fd67d701f013405041e774499148ffddf574b8e5066a8</span>",</span>
+        <span class="line jr">                "invoiceId": "<span class="hl">b5afe815e575</span>"</span>
+        <span class="line dim jr">…</span>
+      </div>
+      <div id="box1" class="abs hid" style="left:182px;top:292px;width:1080px;height:190px;border:3px solid var(--stamp-hi);background:rgba(240,100,74,.07)"></div>
+      <div id="box2" class="abs hid" style="left:182px;top:634px;width:1520px;height:76px;border:3px solid var(--stamp-hi);background:rgba(240,100,74,.07)"></div>
+      <div id="w2bc1" class="abs serif pfg split" style="left:200px;top:790px;font-size:54px;width:1560px;line-height:1.18">
+        <span class="row">Exact terms: 4000000 is 4.00 USDC (6 decimals), to this payee,</span>
+        <span class="row it">in this asset, on this network.</span>
+      </div>
+      <div id="w2bc2" class="abs serif pfg split" style="left:200px;top:790px;font-size:54px;width:1560px;line-height:1.18">
+        <span class="row">The nonce is keccak256(invoiceId).</span>
+        <span class="row it">A signature for this invoice can’t pay any other.</span>
+      </div>
+    </section>
+
+    <!-- W4 proof (bottom half) -->
+    <section id="w4d" class="clip" data-start="40.8" data-duration="9.6" data-track-index="2">
+      <div id="w4capd" class="abs serif pfg split" style="left:200px;top:660px;font-size:54px;width:1600px"><span class="row">Software asks again. <i>The same URL now answers 200.</i></span></div>
+      <div id="w4t" class="term" style="left:200px;top:756px;width:1650px;height:200px;font-size:26px;line-height:38px">
+        <span class="line hid" id="w4t0"><span class="dim">$ </span><span id="w4tcmd">curl -si http://localhost:8787/i/b5afe815e575</span></span>
+        <span class="line okc hid w4r">HTTP/1.1 200 OK</span>
+        <span class="line dim hid w4r">content-type: application/json</span>
+        <span class="line dim hid w4r">…</span>
+        <span class="line hid w4r">{"id":"b5afe815e575","status":"<span class="okc">paid</span>","tx":"0x3344211e4135cc4a2f8cc3c94d0ea2fadf6703008dd5c60613b6888e007fd46d"}</span>
+      </div>
+    </section>
+
+    <!-- W5 AP agent -->
+    <section id="w5d" class="clip" data-start="49.8" data-duration="12.2" data-track-index="2">
+      <div id="w5lab" class="abs lab hid dim" style="left:200px;top:96px">04 · An AP agent</div>
+      <div id="w5cap" class="abs serif pfg split" style="left:200px;top:140px;font-size:64px;width:1560px;line-height:1.12">
+        <span class="row">An agent pays invoice URLs over x402,</span>
+        <span class="row it">only when a purchase order covers them.</span>
+      </div>
+      <div id="w5t" class="term" style="left:200px;top:340px;width:1650px;height:440px;font-size:28px;line-height:42px">
+        <span class="line hid" id="w5t0"><span class="dim">$ </span><span id="w5cmd">npm run demo</span><span class="dim w5c">   # excerpt: docs/SIM-RUN.md</span></span>
+        <span class="line dim w5r">## 2. AP agent works through three more invoice URLs (PO covers b ≤ $5 and d ≤ $10)</span>
+        <span class="line w5r">PAID      9d6b8a6c2302  0xda01f9b59d92f7d87fbbd1a29bcdd58b1b6670f4e79c94e687a6a28eb9e72455</span>
+        <span class="line w5r">REJECTED  eb9896da2fd8 <span class="hl">no_purchase_order</span></span>
+        <span class="line w5r">REJECTED  379df162fb88 <span class="hl">exceeds_purchase_order</span></span>
+        <span class="line w5r"> </span>
+        <span class="line dim w5r">## 3. Balances</span>
+        <span class="line w5r">freelancer 8.00 USDC (expected 8.00)</span>
+        <span class="line w5r">human      21.00 (expected 21.00)</span>
+        <span class="line w5r">agent      96.00 (expected 96.00)</span>
+      </div>
+      <div id="n1" class="note hid" style="left:1080px;top:466px">no purchase order on file: refused</div>
+      <div id="n2" class="note hid" style="left:1080px;top:508px">asks more than the order allows: refused</div>
+      <div id="w5foot" class="abs serif dim it split" style="left:200px;top:836px;font-size:42px;width:1560px"><span class="row">It also refuses an invoice on an unexpected network or asset.</span></div>
+    </section>
+
+    <!-- W6 tests -->
+    <section id="w6d" class="clip" data-start="62" data-duration="10.25" data-track-index="2">
+      <div id="w6lab" class="abs lab hid dim" style="left:200px;top:96px">$ npm test · 26 tests, offline</div>
+      <div id="w6cap" class="abs serif pfg split" style="left:200px;top:136px;font-size:68px;width:1560px"><span class="row">Tampering doesn’t get <i>paid.</i></span></div>
+      <div id="w6c1" class="col" style="left:200px;top:250px;width:900px;font-size:27px;line-height:40px">
+        <span class="grp">what must NOT get paid</span>
+        <span class="it2 ti"><span class="ck"></span>wrong amount</span>
+        <span class="it2 ti"><span class="ck"></span>wrong recipient</span>
+        <span class="it2 ti"><span class="ck"></span>nonce not bound to this invoice</span>
+        <span class="it2 ti"><span class="ck"></span>wrong network</span>
+        <span class="it2 ti"><span class="ck"></span>wrong asset</span>
+        <span class="it2 ti"><span class="ck"></span>insufficient funds</span>
+        <span class="it2 ti"><span class="ck"></span>a tampered signature (someone else's `from`)</span>
+        <span class="it2 ti"><span class="ck"></span>an authorization about to expire</span>
+        <span class="it2 ti"><span class="ck"></span>garbage headers</span>
+        <span class="it2 ti"><span class="ck"></span>unknown invoice</span>
+        <span class="it2 ti"><span class="ck"></span>a plain USDC transfer is NOT a payment (no invoice-bound authorization)</span>
+        <span class="it2 ti"><span class="ck"></span>a payment for invoice A cannot be passed off as payment for invoice B</span>
+      </div>
+      <div id="w6c2" class="col" style="left:1180px;top:250px;width:660px;font-size:27px;line-height:40px">
+        <span class="grp">paying</span>
+        <span class="it2 ti"><span class="ck"></span>lets the same paid URL answer 200 afterwards and refuses a second payment</span>
+        <span class="it2 ti"><span class="ck"></span>lets exactly one of two simultaneous payers win</span>
+      </div>
+      <div id="w6foot" class="abs mono hid" style="left:1180px;top:556px;line-height:1">
+        <div class="dim" style="font-size:28px;white-space:pre">Test Files  1 passed (1)</div>
+        <div class="dim" style="font-size:44px;margin-top:22px">Tests</div>
+        <div class="okc" style="font-size:118px;margin-top:8px;letter-spacing:-0.02em">26 passed</div>
+        <div class="dim" style="font-size:44px;margin-top:10px">(26)</div>
+      </div>
+    </section>
+
+    <!-- W7 probe transcript -->
+    <section id="w7d" class="clip" data-start="71.6" data-duration="9.8" data-track-index="2">
+      <div id="barA" class="abs hid" style="left:182px;top:548px;width:1530px;height:108px;border-top:3px solid var(--ok-hi);border-bottom:3px solid var(--ok-hi);background:rgba(124,196,154,.09)"></div>
+      <div id="barB" class="abs hid" style="left:182px;top:800px;width:1530px;height:108px;border-top:3px solid var(--ok-hi);border-bottom:3px solid var(--ok-hi);background:rgba(124,196,154,.09)"></div>
+      <div id="w7t" class="term" style="left:200px;top:404px;width:1640px;height:620px;font-size:27px;line-height:36px">
+        <span class="line hid" id="w7t0"><span class="dim">$ </span><span id="w7cmd">npm run probe</span><span class="dim w7c">   # excerpt: docs/READONLY-PROBE.md</span></span>
+        <span class="line dim pr"># Read-only probe · 2026-10-11T19:57:38.734Z</span>
+        <span class="line pr">facilitator /supported (exact): ["eip155:10143","eip155:143"]</span>
+        <span class="line dim pr">## Monad (eip155:143) USDC 0x754704Bc059F8C67012fEd69BC8A327a5aafb603</span>
+        <span class="line pr">on-chain DOMAIN_SEPARATOR 0xfe22123edc0dd4aeb912eb7948c5f0e531592c2053b3067612f427db342c93c6</span>
+        <span class="line pr">our computed separator    0xfe22123edc0dd4aeb912eb7948c5f0e531592c2053b3067612f427db342c93c6</span>
+        <span class="line pr">match: <span class="okc">true</span></span>
+        <span class="line wrapl pr">facilitator /verify on unfunded throwaway 0x14d5DC58Ddfb21E5BDf2EC0C3e51d45c0Dbf549E: {"isValid":false,"invalidReason":"<span class="hl">insufficient_funds</span>","invalidReasonDetails":"Onchain balance is not enough to cover the payment amount","payer":""}</span>
+        <span class="line dim pr">## Monad Testnet (eip155:10143) USDC 0x534b2f3A21130d7a60830c2Df862319e593943A3</span>
+        <span class="line pr">on-chain DOMAIN_SEPARATOR 0xf1090f5a61ddee19528cecc447be0f91c7205fc2b34dd271fc0de87809a0a48d</span>
+        <span class="line pr">our computed separator    0xf1090f5a61ddee19528cecc447be0f91c7205fc2b34dd271fc0de87809a0a48d</span>
+        <span class="line pr">match: <span class="okc">true</span></span>
+        <span class="line wrapl pr">facilitator /verify on unfunded throwaway 0x3Ec63e146ba974908511e730C232052768BB3641: {"isValid":false,"invalidReason":"<span class="hl">insufficient_funds</span>","invalidReasonDetails":"Onchain balance is not enough to cover the payment amount","payer":""}</span>
+      </div>
+    </section>
+
+    <!-- W8 CTA strip -->
+    <section id="w8d" class="clip" data-start="80.8" data-duration="7.2" data-track-index="2">
+      <div id="g8d" class="gh pfg" data-layout-allow-overlap data-layout-allow-occlusion>github.com/Ps23102004/paylink-monad</div>
+      <div id="w8cmd" class="abs mono pfg hid" style="left:200px;top:842px;font-size:30px"><span class="dim">$ </span>npm install &amp;&amp; npm test &amp;&amp; npm run demo &amp;&amp; npm run serve</div>
+      <div id="w8note" class="abs serif dim it hid" style="left:200px;top:900px;font-size:36px">Built for Metropolis (Monad), Track 2. Runs in simulation today.</div>
+    </section>
+  </div>
+
+  <div id="simtag"><b>Simulation</b> · local chain · test money</div>
+  <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="88" data-track-index="9"></audio>
+</div>
+
+<script>
+  // split each .row into per-word masks (setup only; the timeline below drives everything). Keeps <i> as .it per word.
+  const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  document.querySelectorAll(".split .row").forEach((row) => {
+    const out = [];
+    row.childNodes.forEach((n) => {
+      const cls = n.nodeType === 1 ? (n.tagName === "I" ? "it" : n.className) : "";
+      n.textContent.split(/(\s+)/).forEach((w) => {
+        if (!w) return;
+        out.push(/^\s+$/.test(w) ? " " : `<span class="mask" style="display:inline-block"><span class="${cls}">${esc(w)}</span></span>`);
+      });
+    });
+    row.innerHTML = out.join("").trim();
+    row.style.display = "block";
+  });
+  const W = (sel) => gsap.utils.toArray(`${sel} .mask > span`);
+  const tl = gsap.timeline({ paused: true });
+  const root = document.getElementById("root");
+  const paperIn = (sel, t, st = 0.05) => tl.fromTo(W(sel), { yPercent: 115 }, { yPercent: 0, duration: 0.55, ease: "power3.out", stagger: st }, t);
+  const paperOut = (sel, t) => tl.to(W(sel), { yPercent: -115, duration: 0.3, ease: "power2.in", stagger: 0.015 }, t);
+  const typeOn = (sel, t, dur, n) => tl.fromTo(sel, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: dur, ease: `steps(${n})` }, t);
+  const show = (sel, t) => tl.set(sel, { autoAlpha: 1 }, t);
+  const hide = (sel, t) => tl.set(sel, { autoAlpha: 0 }, t);
+  const print = (sel, t, gap) => tl.fromTo(sel, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01, stagger: gap }, t);
+  const stampIn = (sel, t, rot) => tl.fromTo(sel, { autoAlpha: 0, scale: 1.75, rotation: rot - 9 }, { autoAlpha: 1, scale: 1, rotation: rot, duration: 0.11, ease: "power4.in" }, t)
+    .to(sel, { x: 3, y: 2, duration: 0.05, ease: "power1.out", yoyo: true, repeat: 1 }, t + 0.11);
+  const seam = (to, t, dur, ease) => tl.to(root, { "--seam": `${to}px`, duration: dur, ease }, t);
+  const dimStep = (on, t) => ["#st1", "#st2", "#st3", "#st4"].forEach((s) => tl.to(s, { opacity: s === on ? 1 : 0.28, duration: 0.25, ease: "power2.out" }, t));
+
+  tl.fromTo("#rules", { y: 0 }, { y: 64 * 4, duration: 88, ease: "none" }, 0);
+  tl.fromTo(".feed", { y: 0 }, { y: -80 * 4, duration: 88, ease: "none" }, 0);
+
+  // ---------- W1 0–9: title + disclosure ----------
+  show("#w1lab", 0.1);
+  paperIn("#w1title", 0.15);
+  paperIn("#w1sub", 0.7, 0.04);
+  seam(620, 2.5, 0.24, "steps(4)"); show(".pf", 2.5);
+  typeOn(".url", 2.85, 0.78, 29);
+  paperIn("#w1disc", 3.9, 0.035);
+  show("#w1mono", 4.9); typeOn("#w1mono", 4.9, 0.7, 30);
+  paperOut("#w1title", 8.85); paperOut("#w1sub", 8.85); paperOut("#w1disc", 8.85);
+  hide("#w1lab", 8.9); hide("#w1mono", 8.9);
+
+  // ---------- W2a 9–15: one URL, two answers ----------
+  tl.fromTo(".url", { scale: 1, transformOrigin: "0px 56px" }, { scale: 0.6, duration: 0.45, ease: "power3.inOut" }, 9.0);
+  tl.fromTo("#winA", { y: 580 }, { y: 0, duration: 0.6, ease: "power3.out" }, 9.35);
+  show("#w2lab", 9.3);
+  paperIn("#w2cap", 9.4);
+  show("#w2acc", 10.0); typeOn("#w2acc", 10.0, 0.4, 18);
+  paperIn("#w2capd", 10.6);
+  show("#w2t0", 11.0); typeOn("#w2cmd", 11.0, 0.5, 24);
+  print("#w2t .w2r", 11.6, 0.07);
+  show("#w2accd", 12.2); typeOn("#w2accd", 12.2, 0.4, 16);
+
+  // ---------- W2b 15–22: inside the 402 ----------
+  seam(0, 14.9, 0.2, "steps(4)");
+  hide(".pf", 15.1);
+  show("#w2blab", 15.1);
+  show("#w2b0", 15.15); typeOn("#w2bcmd", 15.15, 0.5, 30);
+  print("#w2bt .jr", 15.7, 0.05);
+  paperIn("#w2bc1", 16.4, 0.03);
+  show("#box1", 16.4); tl.fromTo("#box1", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power2.out", immediateRender: false }, 16.4);
+  paperOut("#w2bc1", 19.0);
+  hide("#box1", 19.0);
+  paperIn("#w2bc2", 19.3, 0.04);
+  show("#box2", 19.3); tl.fromTo("#box2", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power2.out", immediateRender: false }, 19.3);
+
+  // ---------- W3 22–41: a person pays (real captured states) ----------
+  show(".pf", 21.75);
+  seam(1080, 21.75, 0.4, "power3.inOut");
+  hide(".pf", 22.15);
+  show("#w3lab", 22.2);
+  tl.fromTo("#winB", { x: 1150 }, { x: 0, duration: 0.7, ease: "power3.out" }, 22.2);
+  tl.fromTo(["#st1", "#st2", "#st3", "#st4"], { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.1 }, 22.4);
+  dimStep("#st1", 23.2);
+  // step 2: fund the burner (sim faucet)
+  dimStep("#st2", 25.6);
+  show("#ptrB", 25.6);
+  tl.fromTo("#ptrB", { x: 300, y: 200 }, { x: 0, y: 0, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 25.6);
+  tl.to("#ptrB", { scale: 0.86, duration: 0.06, yoyo: true, repeat: 1 }, 26.15);
+  tl.fromTo("#ripB", { autoAlpha: 1, scale: 0.3 }, { scale: 1.3, autoAlpha: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, 26.18);
+  show("#b2", 26.3);
+  // step 3: pay with the demo burner wallet
+  dimStep("#st3", 29.6);
+  tl.to("#ptrB", { x: 20, y: -85, duration: 0.45, ease: "power2.inOut" }, 29.7);
+  tl.to("#ptrB", { scale: 0.86, duration: 0.06, yoyo: true, repeat: 1 }, 30.2);
+  tl.fromTo("#ripB", { autoAlpha: 1, scale: 0.3, x: 20, y: -85 }, { scale: 1.3, autoAlpha: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, 30.23);
+  show("#b3", 30.35);
+  hide("#ptrB", 31.2);
+  // step 4: paid, then punch in on the real PAID line
+  dimStep("#st4", 33.6);
+  show("#b4", 33.8);
+  tl.fromTo("#winBwrap", { scale: 1, transformOrigin: "1300px 660px" }, { scale: 1.18, duration: 0.8, ease: "power3.inOut" }, 34.4);
+  stampIn("#stampW3", 35.4, -6);
+  tl.to("#winBwrap", { scale: 1, duration: 0.7, ease: "power3.inOut" }, 38.6);
+
+  // ---------- W4 41–50: proof, both sides ----------
+  show(".pf", 40.9);
+  seam(620, 40.9, 0.24, "steps(4)");
+  show("#w4lab", 41.2);
+  typeOn("#w4cmd", 41.25, 0.5, 30);
+  print("#rcpt .line", 41.8, 0.05);
+  show("#scan", 42.3);
+  tl.fromTo("#scan", { y: 0 }, { y: 252, duration: 0.7, ease: "power1.inOut", immediateRender: false }, 42.3);
+  tl.to("#scan", { y: 108, duration: 0.2, ease: "power2.out" }, 43.0);
+  stampIn("#stampW4", 43.3, 7);
+  paperIn("#w4stmt", 43.5);
+  paperIn("#w4mech", 44.2, 0.02);
+  paperIn("#w4capd", 45.4);
+  show("#w4t0", 46.0); typeOn("#w4tcmd", 46.0, 0.5, 24);
+  print("#w4t .w4r", 46.6, 0.08);
+
+  // ---------- W5 50–62: AP agent ----------
+  seam(0, 49.9, 0.2, "steps(4)");
+  hide(".pf", 50.1);
+  show("#w5lab", 50.2);
+  paperIn("#w5cap", 50.3);
+  show("#w5t0", 51.6); typeOn("#w5cmd", 51.6, 0.3, 12);
+  print(".w5c", 51.95, 0);
+  print("#w5t .w5r", 52.3, 0.32);
+  tl.fromTo("#n1", { autoAlpha: 0, x: -30 }, { autoAlpha: 1, x: 0, duration: 0.4, ease: "power3.out" }, 53.6);
+  tl.fromTo("#n2", { autoAlpha: 0, x: -30 }, { autoAlpha: 1, x: 0, duration: 0.4, ease: "power3.out" }, 54.4);
+  paperIn("#w5foot", 56.6);
+
+  // ---------- W6 62–72: tests (clear screen) ----------
+  show("#w6lab", 62.0);
+  paperIn("#w6cap", 62.1);
+  print("#w6c1 .grp, #w6c2 .grp", 62.6, 0);
+  print(".ti", 62.7, 0.09);
+  tl.fromTo("#w6foot", { autoAlpha: 0, scale: 1.3, transformOrigin: "0% 50%" }, { autoAlpha: 1, scale: 1, duration: 0.11, ease: "power4.in" }, 64.3);
+
+  // ---------- W7 72–81: read-only probe ----------
+  show(".pf", 71.75);
+  seam(384, 71.75, 0.45, "power3.inOut");
+  show("#w7lab", 72.2);
+  paperIn("#w7cap", 72.3, 0.03);
+  show("#w7t0", 72.6); typeOn("#w7cmd", 72.6, 0.3, 13);
+  print(".w7c", 72.95, 0);
+  print("#w7t .pr", 73.1, 0.12);
+  show("#barA", 75.0); tl.fromTo("#barA", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power2.out", immediateRender: false }, 75.0);
+  show("#barB", 75.7); tl.fromTo("#barB", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power2.out", immediateRender: false }, 75.7);
+
+  // ---------- W8 81–88: what's not done yet + CTA ----------
+  seam(1080, 80.9, 0.4, "power3.inOut");
+  hide(".pf", 81.3);
+  show("#w8lab", 81.3);
+  paperIn("#w8title", 81.35);
+  tl.fromTo(".td", { autoAlpha: 0, x: -24 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out", stagger: 0.3 }, 82.0);
+  show(".pf", 84.4);
+  seam(760, 84.4, 0.24, "steps(4)");
+  typeOn(".gh", 84.7, 0.75, 35);
+  show("#w8cmd", 85.6);
+  tl.fromTo("#w8note", { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 85.9);
+
+  window.__timelines["main"] = tl;
+</script>
+</body>
+</html>

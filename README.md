@@ -1,5 +1,13 @@
 # Paylink — one invoice link, two kinds of payer
 
+![Paylink](docs/media/hero.png)
+
+> **Note (2026-10-11):** the team's Metropolis submission is [Spreadbounty](https://github.com/Ps23102004/spreadbounty); Paylink is the backup build. A 10-judge panel (Opus 5.5 + Fable 5.1, five roles) scored it 5.0/10 — mainly for sitting in a crowded x402-invoice lane and never having run live. Everything below is still true and runs.
+
+[20-second launch video](docs/media/paylink-launch-20s.mp4) · [88-second walkthrough](docs/media/paylink-walkthrough.mp4) · launch post copy in [docs/LAUNCH.md](docs/LAUNCH.md)
+
+![One URL, two payers](docs/media/launch.gif)
+
 A freelancer sends one URL. A person opens it and pays with a wallet. An accounts-payable **agent** hits the same URL, gets **HTTP 402**, and pays over **x402**. Both settle as USDC on Monad through the same EIP-3009 authorization, and the invoice is marked paid **only after the payment is re-derived from chain logs**.
 
 > **Status, plainly:** built for Metropolis (Monad), Track 2. Everything below was run on a **local simulation chain** (Monad mainnet's real USDC bytecode and state, test money). Not yet run live on Monad. See [docs/SIMULATION.md](docs/SIMULATION.md) for exactly what is real and what is simulated.

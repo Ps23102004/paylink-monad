@@ -4,3 +4,6 @@ node_modules
 dist
 cache
 artifacts
+video/capture/out/
+video/*/renders/
+video/critique/

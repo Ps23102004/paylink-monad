@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1200, height=630" />
+<title>Paylink: social card</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<link rel="stylesheet" href="assets/paylink.css" />
+<style>
+  html, body { width: 1200px; height: 630px; }
+  #root { width: 1200px; height: 630px; }
+  .world { width: 1200px; height: 630px; }
+  #paper { clip-path: inset(0px 0px 250px 0px); }
+  #dark { clip-path: inset(380px 0px 0px 0px); }
+  .margin { left: 40px; height: 630px; }
+  .rules { width: 1200px; height: 700px; top: -14px; }
+  .perf { width: 1200px; top: 378px; }
+  .u { position: absolute; left: 76px; top: 348px; font-family: var(--mono); font-size: 52px; line-height: 1; white-space: nowrap; }
+  #simtag { right: 24px; bottom: 22px; font-size: 14px; padding: 7px 10px 6px; outline-offset: -5px; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="1" data-width="1200" data-height="630">
+  <div id="paper" class="world">
+    <div class="rules"></div><div class="margin"></div><div class="grain"></div><div class="perf"></div>
+    <div id="slab" class="abs lab soft" style="left:78px;top:42px;font-size:16px">Paylink · Metropolis (Monad)</div>
+    <div id="shead" class="abs serif ink" style="left:72px;top:76px;font-size:96px;line-height:1.02;width:900px">One invoice link.<span class="it" style="display:block">Two kinds of payer.</span></div>
+    <div id="sstamp" class="stamp" style="left:892px;top:84px;font-size:104px;border-width:7px;padding:10px 20px 0;transform:rotate(9deg)">Paid</div>
+    <div id="sup" class="u ink" data-layout-allow-overlap data-layout-allow-occlusion>localhost:8787/i/b5afe815e575</div>
+  </div>
+  <div id="dark" class="world">
+    <div class="feed l" style="left:14px"></div><div class="feed r" style="right:14px"></div><div class="perf"></div>
+    <div id="sud" class="u pfg" data-layout-allow-overlap data-layout-allow-occlusion>localhost:8787/i/b5afe815e575</div>
+    <div id="s402" class="abs hl" style="left:72px;top:428px;font-family:var(--stampface);font-size:132px;line-height:1">402</div>
+    <div id="stext" class="abs serif pfg it" style="left:250px;top:440px;font-size:30px;width:860px;line-height:1.22">A person pays with a wallet. An AP agent hits the same URL, gets HTTP 402, and pays over x402. Paid only after the chain logs agree.</div>
+    <div id="srepo" class="abs mono dim" style="left:252px;top:566px;font-size:19px">github.com/Ps23102004/paylink-monad</div>
+  </div>
+  <div id="simtag"><b>Simulation</b> · local chain · test money</div>
+</div>
+<script>window.__timelines["main"] = gsap.timeline({ paused: true });</script>
+</body>
+</html>

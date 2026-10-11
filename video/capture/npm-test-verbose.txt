@@ -1,0 +1,35 @@
+
+ RUN  v5.0.3 /Users/parthsingh/Developer/paylink-monad
+
+ ✓ test/paylink.test.ts > units > parses and formats USDC strictly 1ms
+ ✓ test/paylink.test.ts > units > binds the nonce to the invoice id 1ms
+ ✓ test/paylink.test.ts > units > refuses to seed or fund anything that is not a local Hardhat node 2ms
+ ✓ test/paylink.test.ts > the simulated USDC is Monad's real contract logic > reports the metadata and EIP-712 domain separator the docs promise 17ms
+ ✓ test/paylink.test.ts > the simulated USDC is Monad's real contract logic > funding writes the balance slot the contract actually reads 8ms
+ ✓ test/paylink.test.ts > one URL, two kinds of payer > serves a pay page to browsers and HTTP 402 to software, on the same URL 11ms
+ ✓ test/paylink.test.ts > one URL, two kinds of payer > escapes invoice text in the pay page 5ms
+ ✓ test/paylink.test.ts > one URL, two kinds of payer > rejects bad invoice input 10ms
+ ✓ test/paylink.test.ts > paying > settles a signed authorization, moves the money, and proves it from chain logs 87ms
+ ✓ test/paylink.test.ts > paying > lets the same paid URL answer 200 afterwards and refuses a second payment 54ms
+ ✓ test/paylink.test.ts > paying > blocks a second payer even when the first paid outside this server (on-chain double-pay check) 48ms
+ ✓ test/paylink.test.ts > paying > lets exactly one of two simultaneous payers win 55ms
+ ✓ test/paylink.test.ts > what must NOT get paid > wrong amount 12ms
+ ✓ test/paylink.test.ts > what must NOT get paid > wrong recipient 12ms
+ ✓ test/paylink.test.ts > what must NOT get paid > nonce not bound to this invoice 12ms
+ ✓ test/paylink.test.ts > what must NOT get paid > wrong network 12ms
+ ✓ test/paylink.test.ts > what must NOT get paid > wrong asset 12ms
+ ✓ test/paylink.test.ts > what must NOT get paid > insufficient funds 17ms
+ ✓ test/paylink.test.ts > what must NOT get paid > a tampered signature (someone else's `from`) 17ms
+ ✓ test/paylink.test.ts > what must NOT get paid > an authorization about to expire 15ms
+ ✓ test/paylink.test.ts > what must NOT get paid > garbage headers 5ms
+ ✓ test/paylink.test.ts > what must NOT get paid > unknown invoice 1ms
+ ✓ test/paylink.test.ts > what must NOT get paid > a plain USDC transfer is NOT a payment (no invoice-bound authorization) 30ms
+ ✓ test/paylink.test.ts > what must NOT get paid > a payment for invoice A cannot be passed off as payment for invoice B 48ms
+ ✓ test/paylink.test.ts > AP agent > pays only invoices with a purchase order that covers them 51ms
+ ✓ test/paylink.test.ts > AP agent > refuses an invoice that asks for a different asset 6ms
+
+ Test Files  1 passed (1)
+      Tests  26 passed (26)
+   Start at  16:17:01
+   Duration  899ms (tests 71%, import 22%, transform 7%)
+

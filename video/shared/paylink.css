@@ -1,0 +1,88 @@
+/* Paylink launch system: "one link, two worlds". See video/DESIGN.md. */
+@font-face { font-family: "IBM Plex Serif"; font-weight: 300; font-style: normal; src: url("fonts/IBMPlexSerif-300.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Serif"; font-weight: 300; font-style: italic; src: url("fonts/IBMPlexSerif-300i.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Serif"; font-weight: 400; font-style: italic; src: url("fonts/IBMPlexSerif-400i.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Serif"; font-weight: 500; font-style: normal; src: url("fonts/IBMPlexSerif-500.woff2") format("woff2"); }
+
+:root {
+  --paper: #ece6d6;
+  --paper-2: #e3dcc8;
+  --ink: #1b1813;
+  --ink-soft: #5b5446;
+  --rule: #2f6b4f;
+  --term: #151412;
+  --term-fg: #ece6d6;
+  --term-dim: #9b9484;
+  --stamp: #c93a24;
+  --stamp-hi: #f0644a;
+  --ok-hi: #7cc49a;
+  --serif: "IBM Plex Serif", Georgia, serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+  --stampface: "League Gothic", Impact, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--term); }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; --seam: 1080px; background: var(--term); }
+
+/* Two worlds, one seam. Everything placed in both worlds at the same coordinates straddles the seam. */
+.world { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+#paper { background: var(--paper); clip-path: inset(0px 0px calc(1080px - var(--seam)) 0px); }
+#dark { background: var(--term); clip-path: inset(var(--seam) 0px 0px 0px); }
+
+/* paper: ledger rules + vermilion double margin + grain */
+.rules { position: absolute; left: 0; top: -64px; width: 1920px; height: 1208px;
+  background-image: repeating-linear-gradient(to bottom, transparent 0 62px, rgba(47,107,79,.20) 62px 64px); }
+.margin { position: absolute; top: 0; left: 150px; width: 10px; height: 1080px;
+  border-left: 2px solid rgba(201,58,36,.55); border-right: 2px solid rgba(201,58,36,.55); }
+.grain { position: absolute; inset: 0; background-image: url("grain.png"); background-size: 256px 256px; }
+/* dark: column ticks like tractor-feed paper edge */
+.feed { position: absolute; top: 0; width: 18px; height: 1160px;
+  background-image: radial-gradient(circle at 9px 20px, rgba(236,230,214,.13) 5px, transparent 6px); background-size: 18px 40px; }
+.feed.l { left: 40px; } .feed.r { right: 40px; }
+
+/* perforation along the seam: one copy per world, under the content, so straddling type stays legible */
+.perf { position: absolute; left: 0; width: 1920px; height: 4px; top: calc(var(--seam) - 2px);
+  background-image: linear-gradient(to right, var(--stamp) 0 14px, transparent 14px 24px); background-size: 24px 4px; }
+
+/* type */
+.serif { font-family: var(--serif); font-weight: 300; letter-spacing: -0.02em; line-height: 1.04; }
+.serif i, .serif em, .it { font-style: italic; }
+.mono { font-family: var(--mono); font-weight: 400; letter-spacing: 0; }
+.ink { color: var(--ink); } .soft { color: var(--ink-soft); }
+.pfg { color: var(--term-fg); } .dim { color: var(--term-dim); }
+.hl { color: var(--stamp-hi); } .hl-ink { color: var(--stamp); } .okc { color: var(--ok-hi); }
+.abs { position: absolute; }
+.line { display: block; white-space: pre; }
+.mask { display: block; overflow: hidden; padding-bottom: .2em; margin-bottom: -.2em; }
+.mask > span { display: inline-block; }
+.lab { font-family: var(--mono); font-size: 22px; letter-spacing: .14em; text-transform: uppercase; }
+
+/* browser window around REAL captured pay-page screenshots */
+.win { position: absolute; background: #f6f7f9; border: 3px solid var(--ink); box-shadow: 14px 14px 0 var(--ink); }
+.win .bar { height: 46px; border-bottom: 3px solid var(--ink); background: var(--paper-2); display: flex; align-items: center; gap: 14px; padding: 0 16px; }
+.win .bar b { display: block; width: 14px; height: 14px; border: 2.5px solid var(--ink); border-radius: 50%; }
+.win .bar .addr { font-family: var(--mono); font-size: 21px; color: var(--ink); margin-left: 10px; }
+.win .shot { position: relative; overflow: hidden; }
+.win .shot img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+/* rubber stamp */
+.stamp { position: absolute; font-family: var(--stampface); color: var(--stamp); text-transform: uppercase; line-height: .9;
+  border: 9px solid var(--stamp); border-radius: 14px; padding: 14px 28px 4px; letter-spacing: .02em; mix-blend-mode: multiply;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='11'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.25'/></filter><rect width='300' height='300' filter='url(%23m)'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='11'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.25'/></filter><rect width='300' height='300' filter='url(%23m)'/></svg>"); }
+.stamp small { display: block; font-family: var(--mono); font-weight: 700; font-size: 27px; letter-spacing: .08em; padding: 6px 0 12px; }
+
+/* persistent honesty bug */
+#simtag { position: absolute; right: 40px; bottom: 34px; z-index: 50; font-family: var(--mono); font-size: 20px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--term-fg); background: var(--ink); padding: 9px 14px 8px; outline: 2px solid var(--stamp); outline-offset: -6px; }
+#simtag b { color: var(--stamp-hi); font-weight: 700; }
+
+/* pointer used to show where a click happened on the real UI */
+.pointer { position: absolute; width: 44px; height: 56px; z-index: 40; }
+.ripple { position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 4px solid var(--stamp); z-index: 39; }
+
+.cursor { display: inline-block; width: .6em; height: 1.05em; background: var(--stamp-hi); vertical-align: -0.18em; margin-left: .08em; }
+
+/* drawn check mark (IBM Plex Mono has no U+2713; the system fallback reads like a root sign). Same 2-char advance as "✓ " */
+.ck { display: inline-block; width: .34em; height: .68em; border-right: .13em solid var(--ok-hi); border-bottom: .13em solid var(--ok-hi);
+  transform: translateY(-.14em) rotate(42deg); margin: 0 .62em 0 .22em; vertical-align: middle; }
